@@ -18,7 +18,7 @@ jobs:
 
     
     - name: install the gcloud cli
-      uses: google-github-actions/setup-gcloud@
+      uses: google-github-actions/setup-gcloud@v4
       with:
         project_id: ${{ secrets.GCP_PROJECT }}
         service_account_key: ${{ secrets.GCP_SA_KEY }}
