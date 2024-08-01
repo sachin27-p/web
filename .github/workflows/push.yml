@@ -12,23 +12,22 @@ jobs:
     env: 
         image_name: html
     
-   
-
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v1
+    - name: install the gcloud cli
+      uses: google-github-actions/setup-gcloud@v0
+      with:
+        project_id: ${{ secrets.GCP_PROJECT }}
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
+        install_components: 'gke-gcloud-auth-plugin'
+        export_default_credentials: true
 
-    - name: Log in to Google Container Registry
+    - name: build and push the docker image
       env:
-        GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
+        GCP_PROJECT: ${{ secrets.GCP_PROJECT }}
       run: |
-        gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
-        echo $GCP_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
-
-    - name: Build and Push Docker image
-      run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/image_name:latest${{ github.sha }} .
-        docker push gcr.io/${{ secrets.GCP_PROJECT }}/image_name:latest${{ github.sha }}
+        gcloud auth configure-docker us-central1-docker.pkg.dev
+        docker build -t us-central1-docker.pkg.dev/$GCP_PROJECT/web/image_name:latest .
+        docker push us-central1-docker.pkg.dev/$GCP_PROJECT/web/image_name:latest
