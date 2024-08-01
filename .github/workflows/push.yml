@@ -10,7 +10,7 @@ jobs:
     name: Build and Push to GCP
     runs-on: ubuntu-latest
     env: 
-        IMAGE_NAME: html
+        image_name: html
 
 
     steps:
@@ -26,5 +26,5 @@ jobs:
 
     - name: Build and Push Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:latest${{ github.sha }} .
-        docker push gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:latest${{ github.sha }}
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/image_nameE:latest${{ github.sha }} .
+        docker push gcr.io/${{ secrets.GCP_PROJECT }}/image_name:latest${{ github.sha }}
