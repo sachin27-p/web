@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: ubuntu-latest
     env: 
-        image: html
+        images: html
     
 
     steps:
@@ -19,14 +19,15 @@ jobs:
     - name: Set up Google Cloud SDK
       uses: google-github-actions/setup-gcloud@v1
       with:
+        service_account_key: ${{ secrets.GCP_SA_KEY }}
         project_id: ${{ secrets.GCP_PROJECT }}
-        #service_account_key: ${{ secrets.GCP_SA_KEY }}
+       
 
     - name: Configure Docker
       run: gcloud auth configure-docker
 
-    - name: Build and Push Docker image
+    - name: Build and Push Docker images
       run: |
-        IMAGE=gcr.io/${{ secrets.GCP_PROJECT }}/image:latest${{ github.sha }}
+        IMAGE=gcr.io/${{ secrets.GCP_PROJECT }}/images:latest${{ github.sha }}
         docker build -t $IMAGE .
         docker push $IMAGE
