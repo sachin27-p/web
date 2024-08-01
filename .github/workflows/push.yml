@@ -11,7 +11,8 @@ jobs:
     runs-on: ubuntu-latest
     env: 
         image_name: html
-
+    
+   
 
     steps:
     - name: Checkout code
@@ -24,6 +25,7 @@ jobs:
       env:
         GCP_SA_KEY: ${{ secrets.GCP_SA_KEY }}
       run: |
+        gcloud auth print-access-token | docker login -u oauth2accesstoken --password-stdin https://us-central1-docker.pkg.dev
         echo $GCP_SA_KEY | docker login -u _json_key --password-stdin https://gcr.io
 
     - name: Build and Push Docker image
