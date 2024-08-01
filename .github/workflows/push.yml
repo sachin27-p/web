@@ -26,5 +26,5 @@ jobs:
 
     - name: Build and Push Docker image
       run: |
-        docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:${{ github.sha }} .
-        docker push gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:${{ github.sha }}
+        docker build -t gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:latest${{ github.sha }} .
+        docker push gcr.io/${{ secrets.GCP_PROJECT }}/IMAGE_NAME:latest${{ github.sha }}
