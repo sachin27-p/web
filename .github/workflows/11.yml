@@ -8,6 +8,8 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
+    env: 
+        image_name: html
     steps:
 
     - name: code checkout
