@@ -1,4 +1,4 @@
-name: Deploygcr
+name: Build PUSH to GCR
 
 on:
   push:
